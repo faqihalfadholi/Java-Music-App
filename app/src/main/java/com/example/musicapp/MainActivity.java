@@ -1,35 +1,29 @@
 package com.example.musicapp;
 
 import android.media.MediaPlayer;
-import android.os.Handler;
-import android.widget.Button;
-import android.widget.SeekBar;
+import android.os.Parcelable;
+import android.widget.ListView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
-import java.util.Random;
+import android.os.Bundle;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
-    MediaPlayer mediaPlayer;
-    Button playButton, pauseButton, stopButton, nextButton, previousButton, randomButton;
-    SeekBar seekBar;
-    Handler handler = new Handler();
-    int currentSongIndex = 0;
-
-    private int[] songResources = {
-            R.raw.song1,
-            R.raw.song2,
-            R.raw.song3,
-            R.raw.song4,
-            R.raw.song5,
-            R.raw.song6,
-            R.raw.song7,
-            R.raw.song8,
-            R.raw.song9,
-            R.raw.song10
-    };
-
+    ViewPager2 viewPager;
+    TabLayout tabLayout;
+    PlayListFragment playListFragment;
+    PlayerFragment playerFragment;
 
 
     @Override
@@ -37,125 +31,52 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Menghubungkan tombol dan SeekBar
-        playButton = findViewById(R.id.button_play);
-        pauseButton = findViewById(R.id.button_pause);
-        stopButton = findViewById(R.id.button_stop);
-        nextButton = findViewById(R.id.button_next);
-        previousButton = findViewById(R.id.button_previous);
-        seekBar = findViewById(R.id.seek_bar);
-        randomButton = findViewById(R.id.button_random);
+        viewPager = findViewById(R.id.viewPager);
+        tabLayout = findViewById(R.id.tablayout);
 
-        mediaPlayer = MediaPlayer.create(this, songResources[currentSongIndex]);
-        seekBar.setMax(mediaPlayer.getDuration());
+        // Initialize fragments
+        playListFragment = new PlayListFragment();
+        playerFragment = new PlayerFragment();
 
-        playButton.setOnClickListener(v -> {
-            if (!mediaPlayer.isPlaying()) {
-                mediaPlayer.start();
-                updateSeekBar();
-            }
+        // Set up music list and listener
+        ArrayList<Music> musicList = new ArrayList<>();
+        // TODO: Add your music items to the musicList
 
-        });
+        Bundle args = new Bundle();
+        args.putParcelableArrayList("music_list", musicList);
+        playListFragment.setArguments(args);
+        playerFragment.setArguments(args);
 
-        pauseButton.setOnClickListener(v -> {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
-            }
-        });
 
-        stopButton.setOnClickListener(v -> {
-            stopAndReset();
-        });
+        // Set up ViewPager2 with FragmentStateAdapter
+        ViewPageAdapter viewPagerAdapter = new ViewPageAdapter(this);
+        viewPagerAdapter.addFragment(playListFragment, "Playlist");
+        viewPagerAdapter.addFragment(playerFragment, "Player");
+        viewPager.setAdapter(viewPagerAdapter);
 
-        nextButton.setOnClickListener(v -> {
-            currentSongIndex = (currentSongIndex + 1) % songResources.length;
-            playSong(currentSongIndex);
-        });
-
-        previousButton.setOnClickListener(v -> {
-            currentSongIndex = (currentSongIndex - 1 + songResources.length) % songResources.length;
-            playSong(currentSongIndex);
-        });
-
-        randomButton.setOnClickListener(v -> {
-            playRandomSong();
-        });
+        // Connect TabLayout with ViewPager2
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText(viewPagerAdapter.getFragmentTitle(position))
+        ).attach();
 
 
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//         Set up listener
+        MusicAdapter.OnMusicClickListener listener = new MusicAdapter.OnMusicClickListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser && mediaPlayer != null) {
-                    mediaPlayer.seekTo(progress);
-                }
+            public void onMusicClick(Music music) {
+                Bundle args = new Bundle();
+                args.putParcelableArrayList("music_list", musicList);
+                args.putParcelable("selected_music", music);
+                playerFragment.setArguments(args);
+                viewPager.setCurrentItem(1); // Switch to Player tab
             }
+        };
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        mediaPlayer.setOnCompletionListener(mp -> {
-            currentSongIndex = (currentSongIndex + 1) % songResources.length;
-            playSong(currentSongIndex);
-        });
-    }
-
-
-    private void playRandomSong() {
-        Random random = new Random();
-        int newSongIndex;
-
-        do {
-            newSongIndex = random.nextInt(songResources.length);
-        } while (newSongIndex == currentSongIndex);
-
-        currentSongIndex = newSongIndex;
-        playSong(currentSongIndex);
-    }
-
-    private void playSong(int index) {
-        stopAndReset();
-        mediaPlayer = MediaPlayer.create(this, songResources[currentSongIndex]);
-        seekBar.setMax(mediaPlayer.getDuration());
-        mediaPlayer.start();
-        updateSeekBar();
-        mediaPlayer.setOnCompletionListener(mp -> {
-            currentSongIndex++;
-            if (currentSongIndex < songResources.length) {
-                playSong(currentSongIndex);
-            }else {
-                currentSongIndex = 0;
-            }
-        });
-    }
-
-    private void stopAndReset() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.reset();
-            mediaPlayer.release();
+//         Set click listener to PlayListFragment if the method exists
+        if (playListFragment instanceof MusicAdapter.OnMusicClickListener) {
+            playListFragment.setOnMusicClickListener(listener);
         }
     }
 
-    private void updateSeekBar() {
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            seekBar.setProgress(mediaPlayer.getCurrentPosition());
-            handler.postDelayed(this::updateSeekBar, 1000);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopAndReset();
-        handler.removeCallbacksAndMessages(null);
-    }
 }
