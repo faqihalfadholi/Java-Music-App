@@ -24,17 +24,30 @@ public class PlayerFragment extends Fragment {
     private int currentSongIndex = 0;
 
     private int[] songResources = {
-            R.raw.song1,
-            R.raw.song2,
-            R.raw.song3,
-            R.raw.song4,
-            R.raw.song5,
-            R.raw.song6,
-            R.raw.song7,
-            R.raw.song8,
-            R.raw.song9,
-            R.raw.song10
+            R.raw.cent,
+            R.raw.theboyismine,
+            R.raw.wecantbefriend,
+            R.raw.dont,
+            R.raw.collide,
+            R.raw.youright,
+            R.raw.ladykiller,
+            R.raw.goodforyouxoneofthegirl,
+            R.raw.onthefloor,
+            R.raw.confident,
+            R.raw.rodeo,
+            R.raw.thelostsouldown,
+            R.raw.obsessed,
+            R.raw.kissitbetter,
+            R.raw.espresso,
+            R.raw.sayit,
+            R.raw.mindgames,
+            R.raw.nobodygetsme,
+            R.raw.snooze,
+            R.raw.twoon,
+            R.raw.heydaddy,
+            R.raw.yad
     };
+
 
     public PlayerFragment() {
     }

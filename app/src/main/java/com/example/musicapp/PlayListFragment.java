@@ -32,16 +32,30 @@ public class PlayListFragment extends Fragment {
         listView = view.findViewById(R.id.listView);
         musicList = new ArrayList<>();
 
-        Music music1 = new Music("Song 1", "Artist 1", R.drawable.ic_launcher_background, R.raw.song1);
-        Music music2 = new Music("Song 2", "Artist 2", R.drawable.ic_launcher_background, R.raw.song2);
-        Music music3 = new Music("Song 3", "Artist 3", R.drawable.ic_launcher_background, R.raw.song3);
-        Music music4 = new Music("Song 4", "Artist 4", R.drawable.ic_launcher_background, R.raw.song4);
-        Music music5 = new Music("Song 5", "Artist 5", R.drawable.ic_launcher_background, R.raw.song5);
-        Music music6 = new Music("Song 6", "Artist 6", R.drawable.ic_launcher_background, R.raw.song6);
-        Music music7 = new Music("Song 7", "Artist 7", R.drawable.ic_launcher_background, R.raw.song7);
-        Music music8 = new Music("Song 8", "Artist 8", R.drawable.ic_launcher_background, R.raw.song8);
-        Music music9 = new Music("Song 9", "Artist 9", R.drawable.ic_launcher_background, R.raw.song9);
-        Music music10 = new Music("Song 10", "Artist 10", R.drawable.ic_launcher_background, R.raw.song10);
+        Music music1 = new Music("Baby by Me", "50 Cent", R.drawable.cent, R.raw.cent);
+        Music music2 = new Music("The Boy Is Mine", "Ariana Grande", R.drawable.theboy, R.raw.theboyismine);
+        Music music3 = new Music("We Can't Be Friends", "Ariana Grande", R.drawable.wecant, R.raw.wecantbefriend);
+        Music music4 = new Music("Don't", "Bryson Tiller", R.drawable.dont, R.raw.dont);
+        Music music5 = new Music("Collide", "Justine Skye ft. Tyga", R.drawable.collide, R.raw.collide);
+        Music music6 = new Music("You Right", "Doja Cat, The Weeknd", R.drawable.youright, R.raw.youright);
+        Music music7 = new Music("Lady Killers II", "G-Eazy", R.drawable.ladykiller, R.raw.ladykiller);
+        Music music8 = new Music("Good For You", "The Weeknd", R.drawable.oneofthegirlxgoodforyou, R.raw.goodforyouxoneofthegirl);
+        Music music9 = new Music("On The Floor", "Jennifer Lopez ft. Pitbull", R.drawable.onthefloor, R.raw.onthefloor);
+        Music music10 = new Music("Confident", "Justin Bieber", R.drawable.confident, R.raw.confident);
+        Music music11 = new Music("Rodeo Remix", "Lah Pat ft.Flo Milli", R.drawable.rodeolahpat, R.raw.rodeo);
+        Music music12 = new Music("Lost Soul Down", "NBSPILV", R.drawable.theloustsouldown, R.raw.thelostsouldown);
+        Music music13 = new Music("Obsessed", "Mariah Carey", R.drawable.obsessed, R.raw.obsessed);
+        Music music14 = new Music("Kiss It Better", "Rihanna", R.drawable.kissitbetter, R.raw.kissitbetter);
+        Music music15 = new Music("Espresso", "Sabrina Carpenter", R.drawable.espresso, R.raw.espresso);
+        Music music16 = new Music("Say It", "Tory Lanez", R.drawable.sayit, R.raw.sayit);
+        Music music17 = new Music("Mind Games", "Sickick", R.drawable.mindgames, R.raw.mindgames);
+        Music music18 = new Music("Nobody Gets Me", "SZA", R.drawable.nobodygetme, R.raw.nobodygetsme);
+        Music music19 = new Music("Snooze", "SZA", R.drawable.snooze, R.raw.snooze);
+        Music music20 = new Music("2 On", "Tinashe", R.drawable.twoon, R.raw.twoon);
+        Music music21 = new Music("Hey Daddy ", "Usher", R.drawable.heydaddy, R.raw.heydaddy);
+        Music music22 = new Music("YAD", "YAD", R.drawable.yad, R.raw.yad);
+
+
 
         musicList.add(music1);
         musicList.add(music2);
@@ -53,6 +67,18 @@ public class PlayListFragment extends Fragment {
         musicList.add(music8);
         musicList.add(music9);
         musicList.add(music10);
+        musicList.add(music11);
+        musicList.add(music12);
+        musicList.add(music13);
+        musicList.add(music14);
+        musicList.add(music15);
+        musicList.add(music16);
+        musicList.add(music17);
+        musicList.add(music18);
+        musicList.add(music19);
+        musicList.add(music20);
+        musicList.add(music21);
+        musicList.add(music22);
 
         adapter = new MusicAdapter(getContext(), musicList, onMusicClickListener);
         listView.setAdapter(adapter);
