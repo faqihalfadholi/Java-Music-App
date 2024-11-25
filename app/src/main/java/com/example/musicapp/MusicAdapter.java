@@ -62,6 +62,12 @@ public class MusicAdapter extends ArrayAdapter<Music> {
             });
         }
 
+        if (listener != null) {
+            convertView.setOnClickListener(v -> listener.onMusicClick(music));
+        } else {
+            convertView.setOnClickListener(null); // Disable click if no listener
+        }
+
         return convertView;
     }
 }

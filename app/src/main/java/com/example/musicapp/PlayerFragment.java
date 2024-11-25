@@ -1,14 +1,23 @@
 package com.example.musicapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -17,11 +26,11 @@ import java.util.Random;
 public class PlayerFragment extends Fragment {
 
     private MediaPlayer mediaPlayer;
-    private ImageButton  nextButton, previousButton, randomButton;
-    private ToggleButton playButton;
+    private ImageButton  nextButton, previousButton, randomButton, playButton;
     private SeekBar seekBar;
     private Handler handler = new Handler(Looper.getMainLooper());
     private int currentSongIndex = 0;
+    private Music selectedMusic;
 
     private int[] songResources = {
             R.raw.cent,
@@ -65,16 +74,29 @@ public class PlayerFragment extends Fragment {
         seekBar = view.findViewById(R.id.seek_bar);
         randomButton = view.findViewById(R.id.button_random);
 
+        if (getArguments() != null) {
+            selectedMusic = getArguments().getParcelable("selected_music");
+        }
+
 
         mediaPlayer = MediaPlayer.create(requireContext(), songResources[currentSongIndex]);
         seekBar.setMax(mediaPlayer.getDuration());
 
+        if (selectedMusic != null) {
+            playSelectedMusic(selectedMusic);
+            playButton.setImageResource(R.drawable.pause);
+        }
+
         playButton.setOnClickListener(v -> {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.pause();
+                playButton.setImageResource(R.drawable.play);
+
             } else {
                 mediaPlayer.start();
                 updateSeekBar();
+                playButton.setImageResource(R.drawable.pause);
+
             }
 
         });
@@ -91,7 +113,13 @@ public class PlayerFragment extends Fragment {
         });
 
         randomButton.setOnClickListener(v -> {
-            playRandomSong();
+            if (mediaPlayer.isPlaying()) {
+                playRandomSong();
+                playButton.setImageResource(R.drawable.pause);
+            } else {
+                playRandomSong();
+                playButton.setImageResource(R.drawable.pause);
+            }
         });
 
 
@@ -123,6 +151,24 @@ public class PlayerFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Ambil data lagu baru dari arguments
+        if (getArguments() != null) {
+            Music newSelectedMusic = getArguments().getParcelable("selected_music");
+
+            // Jika lagu baru berbeda dari yang sedang diputar, mainkan lagu baru
+            if (newSelectedMusic != null && (selectedMusic == null || !newSelectedMusic.equals(selectedMusic))) {
+                selectedMusic = newSelectedMusic;
+                playSelectedMusic(selectedMusic);
+            }
+        }
+    }
+
+
+
     // Fungsi untuk memutar lagu acak
     private void playRandomSong() {
         Random random = new Random();
@@ -151,6 +197,23 @@ public class PlayerFragment extends Fragment {
         });
     }
 
+    private void playSelectedMusic(Music music) {
+        stopAndReset(); // Hentikan lagu yang sedang diputar
+        mediaPlayer = MediaPlayer.create(requireContext(), music.getMusicResource());
+        seekBar.setMax(mediaPlayer.getDuration());
+        mediaPlayer.start();
+        updateSeekBar();
+
+
+        // Set listener untuk menyelesaikan lagu
+        mediaPlayer.setOnCompletionListener(mp -> {
+            currentSongIndex = (currentSongIndex + 1) % songResources.length;
+            playSong();
+        });
+    }
+
+
+
     // Menghentikan dan mereset MediaPlayer
     private void stopAndReset() {
         if (mediaPlayer != null) {
@@ -159,6 +222,7 @@ public class PlayerFragment extends Fragment {
             mediaPlayer.release();
         }
     }
+
 
     // Update SeekBar secara berkala
     private void updateSeekBar() {

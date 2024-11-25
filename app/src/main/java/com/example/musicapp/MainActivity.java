@@ -16,14 +16,13 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
-import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
     ViewPager2 viewPager;
     TabLayout tabLayout;
-    PlayListFragment playListFragment;
-    PlayerFragment playerFragment;
+    PlayListFragment playListFragment = new PlayListFragment()  ;
+    PlayerFragment playerFragment = new PlayerFragment();
 
 
     @Override
@@ -47,6 +46,18 @@ public class MainActivity extends AppCompatActivity {
         playListFragment.setArguments(args);
         playerFragment.setArguments(args);
 
+//         Set up listener
+        MusicAdapter.OnMusicClickListener listener = new MusicAdapter.OnMusicClickListener() {
+            @Override
+            public void onMusicClick(Music music) {
+                Bundle args = new Bundle();
+                args.putParcelable("selected_music", music);
+                playerFragment.setArguments(args);
+                viewPager.setCurrentItem(1); // Switch to Player tab
+            }
+        };
+
+        playListFragment.setOnMusicClickListener(listener);
 
         // Set up ViewPager2 with FragmentStateAdapter
         ViewPageAdapter viewPagerAdapter = new ViewPageAdapter(this);
@@ -54,29 +65,11 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(playerFragment, "Player");
         viewPager.setAdapter(viewPagerAdapter);
 
+
         // Connect TabLayout with ViewPager2
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(viewPagerAdapter.getFragmentTitle(position))
         ).attach();
-
-
-
-//         Set up listener
-        MusicAdapter.OnMusicClickListener listener = new MusicAdapter.OnMusicClickListener() {
-            @Override
-            public void onMusicClick(Music music) {
-                Bundle args = new Bundle();
-                args.putParcelableArrayList("music_list", musicList);
-                args.putParcelable("selected_music", music);
-                playerFragment.setArguments(args);
-                viewPager.setCurrentItem(1); // Switch to Player tab
-            }
-        };
-
-//         Set click listener to PlayListFragment if the method exists
-        if (playListFragment instanceof MusicAdapter.OnMusicClickListener) {
-            playListFragment.setOnMusicClickListener(listener);
-        }
     }
 
 }

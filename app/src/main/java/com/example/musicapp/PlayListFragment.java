@@ -84,7 +84,12 @@ public class PlayListFragment extends Fragment {
         listView.setAdapter(adapter);
 
 
-
+        if (onMusicClickListener != null) {
+            adapter = new MusicAdapter(getContext(), musicList, onMusicClickListener);
+            listView.setAdapter(adapter);
+        } else {
+            Toast.makeText(getContext(), "Listener not set!", Toast.LENGTH_SHORT).show();
+        }
 
 
 
@@ -93,7 +98,11 @@ public class PlayListFragment extends Fragment {
 
     public void setOnMusicClickListener(MusicAdapter.OnMusicClickListener listener) {
         this.onMusicClickListener = listener;
-        playMusic(musicList.get(0));
+        // Jika adapter sudah ada, update listener
+        if (adapter != null) {
+            adapter = new MusicAdapter(getContext(), musicList, onMusicClickListener);
+            listView.setAdapter(adapter);
+        }
     }
 
     private void playMusic(Music music) {

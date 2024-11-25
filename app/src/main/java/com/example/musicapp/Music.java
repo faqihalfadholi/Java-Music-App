@@ -49,13 +49,20 @@ public class Music implements Parcelable {
         this.imageMusic = imageMusic;
     }
 
+    // Parcelable implementation
     protected Music(Parcel in) {
-        // Read data from parcel
+        title = in.readString();
+        artist = in.readString();
+        imageMusic = in.readInt();
+        musicResource = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        // Write data to parcel
+        dest.writeString(title);
+        dest.writeString(artist);
+        dest.writeInt(imageMusic);
+        dest.writeInt(musicResource);
     }
 
     @Override
@@ -74,4 +81,14 @@ public class Music implements Parcelable {
             return new Music[size];
         }
     };
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Music music = (Music) obj;
+        return musicResource == music.musicResource && title.equals(music.title) && artist.equals(music.artist);
+    }
+
 }
