@@ -84,18 +84,18 @@ public class PlayerFragment extends Fragment {
 
         if (selectedMusic != null) {
             playSelectedMusic(selectedMusic);
-            playButton.setImageResource(R.drawable.pause);
+            playButton.setImageResource(R.drawable.ic_pause);
         }
 
         playButton.setOnClickListener(v -> {
             if (mediaPlayer.isPlaying()) {
                 mediaPlayer.pause();
-                playButton.setImageResource(R.drawable.play);
+                playButton.setImageResource(R.drawable.ic_play);
 
             } else {
                 mediaPlayer.start();
                 updateSeekBar();
-                playButton.setImageResource(R.drawable.pause);
+                playButton.setImageResource(R.drawable.ic_pause);
 
             }
 
@@ -115,10 +115,10 @@ public class PlayerFragment extends Fragment {
         randomButton.setOnClickListener(v -> {
             if (mediaPlayer.isPlaying()) {
                 playRandomSong();
-                playButton.setImageResource(R.drawable.pause);
+                playButton.setImageResource(R.drawable.ic_pause);
             } else {
                 playRandomSong();
-                playButton.setImageResource(R.drawable.pause);
+                playButton.setImageResource(R.drawable.ic_pause);
             }
         });
 

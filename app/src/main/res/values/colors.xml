@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tab_unselected">#FF9EAA</color>
+    <color name="tab_selected">#F9F9E0</color>
 </resources>

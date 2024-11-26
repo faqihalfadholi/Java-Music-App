@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#C79A9A"
+        android:background="#3AA6B9"
         android:padding="16dp"
         tools:context=".MainActivity">
 
@@ -28,18 +28,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="65dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            android:progressDrawable="@drawable/custom_seekbar"
+            android:thumb="@drawable/custom_thumb"
+            android:splitTrack="false"/>
 
 
     <ImageButton
             android:id="@+id/button_previous"
             android:layout_width="62dp"
             android:layout_height="55dp"
-            android:src="@drawable/next"
-            android:background="#C79A9A"
-            android:rotation="180"
+            android:src="@drawable/ic_previous"
+            android:background="#3AA6B9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/button_random"
             android:layout_marginStart="36dp"
@@ -51,8 +53,8 @@
             android:id="@+id/button_play"
             android:layout_width="62dp"
             android:layout_height="48dp"
-            android:background="#C79A9A"
-            android:src="@drawable/play"
+            android:background="#3AA6B9"
+            android:src="@drawable/ic_play"
             app:layout_constraintStart_toEndOf="@id/button_previous"
             app:layout_constraintEnd_toStartOf="@id/button_next"
             app:layout_constraintBottom_toTopOf="@id/button_random"
@@ -64,8 +66,8 @@
             android:id="@+id/button_next"
             android:layout_width="62dp"
             android:layout_height="55dp"
-            android:src="@drawable/next"
-            android:background="#C79A9A"
+            android:src="@drawable/ic_next"
+            android:background="#3AA6B9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/button_random"
             android:layout_marginEnd="36dp"
@@ -75,10 +77,10 @@
 
     <ImageButton
             android:id="@+id/button_random"
-            android:layout_width="62dp"
-            android:layout_height="48dp"
-            android:src="@drawable/shuffle"
-            android:background="#C79A9A"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_shuffle"
+            android:background="#3AA6B9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

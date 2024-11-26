@@ -70,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(viewPagerAdapter.getFragmentTitle(position))
         ).attach();
+
+        tabLayout.setTabTextColors(
+                getResources().getColor(R.color.tab_unselected),
+                getResources().getColor(R.color.tab_selected)
+        );
     }
 
 }
