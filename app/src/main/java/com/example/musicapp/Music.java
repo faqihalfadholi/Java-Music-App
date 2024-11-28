@@ -49,7 +49,7 @@ public class Music implements Parcelable {
         this.imageMusic = imageMusic;
     }
 
-    // Parcelable implementation
+
     protected Music(Parcel in) {
         title = in.readString();
         artist = in.readString();

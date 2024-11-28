@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="#3AA6B9"
+        android:background="#FFD4D4"
         android:padding="16dp">
 
 
@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/tablayout"
-            android:background="#FFD0D0"
+            android:background="#FFFFE8"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

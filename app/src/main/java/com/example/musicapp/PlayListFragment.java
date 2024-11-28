@@ -20,13 +20,13 @@ public class PlayListFragment extends Fragment {
 
 
     public PlayListFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_play_list, container, false);
 
         listView = view.findViewById(R.id.listView);
@@ -98,7 +98,7 @@ public class PlayListFragment extends Fragment {
 
     public void setOnMusicClickListener(MusicAdapter.OnMusicClickListener listener) {
         this.onMusicClickListener = listener;
-        // Jika adapter sudah ada, update listener
+
         if (adapter != null) {
             adapter = new MusicAdapter(getContext(), musicList, onMusicClickListener);
             listView.setAdapter(adapter);
@@ -112,7 +112,7 @@ public class PlayListFragment extends Fragment {
         mediaPlayer = MediaPlayer.create(getContext(), music.getMusicResource());
         mediaPlayer.start();
 
-        // Notify the activity or other fragments about the currently playing song
+
         if (onMusicClickListener != null) {
             onMusicClickListener.onMusicClick(music);
         }

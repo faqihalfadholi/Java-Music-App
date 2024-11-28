@@ -155,11 +155,11 @@ public class PlayerFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // Ambil data lagu baru dari arguments
+
         if (getArguments() != null) {
             Music newSelectedMusic = getArguments().getParcelable("selected_music");
 
-            // Jika lagu baru berbeda dari yang sedang diputar, mainkan lagu baru
+
             if (newSelectedMusic != null && (selectedMusic == null || !newSelectedMusic.equals(selectedMusic))) {
                 selectedMusic = newSelectedMusic;
                 playSelectedMusic(selectedMusic);
@@ -169,12 +169,11 @@ public class PlayerFragment extends Fragment {
 
 
 
-    // Fungsi untuk memutar lagu acak
+
     private void playRandomSong() {
         Random random = new Random();
         int newSongIndex;
 
-        // Pilih lagu secara acak, pastikan tidak sama dengan lagu yang sedang diputar
         do {
             newSongIndex = random.nextInt(songResources.length);
         } while (newSongIndex == currentSongIndex);
@@ -183,7 +182,7 @@ public class PlayerFragment extends Fragment {
         playSong();
     }
 
-    // Memulai lagu dan mengatur ulang MediaPlayer
+
     private void playSong() {
         stopAndReset();
         mediaPlayer = MediaPlayer.create(requireContext(), songResources[currentSongIndex]);
@@ -198,14 +197,14 @@ public class PlayerFragment extends Fragment {
     }
 
     private void playSelectedMusic(Music music) {
-        stopAndReset(); // Hentikan lagu yang sedang diputar
+        stopAndReset();
         mediaPlayer = MediaPlayer.create(requireContext(), music.getMusicResource());
         seekBar.setMax(mediaPlayer.getDuration());
         mediaPlayer.start();
         updateSeekBar();
 
 
-        // Set listener untuk menyelesaikan lagu
+
         mediaPlayer.setOnCompletionListener(mp -> {
             currentSongIndex = (currentSongIndex + 1) % songResources.length;
             playSong();
@@ -214,7 +213,7 @@ public class PlayerFragment extends Fragment {
 
 
 
-    // Menghentikan dan mereset MediaPlayer
+
     private void stopAndReset() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
@@ -224,7 +223,7 @@ public class PlayerFragment extends Fragment {
     }
 
 
-    // Update SeekBar secara berkala
+
     private void updateSeekBar() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             seekBar.setProgress(mediaPlayer.getCurrentPosition());

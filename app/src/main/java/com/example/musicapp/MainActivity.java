@@ -1,13 +1,9 @@
 package com.example.musicapp;
 
-import android.media.MediaPlayer;
-import android.os.Parcelable;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.graphics.Typeface;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
@@ -33,48 +29,50 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tablayout);
 
-        // Initialize fragments
+
         playListFragment = new PlayListFragment();
         playerFragment = new PlayerFragment();
 
-        // Set up music list and listener
+
         ArrayList<Music> musicList = new ArrayList<>();
-        // TODO: Add your music items to the musicList
+
 
         Bundle args = new Bundle();
         args.putParcelableArrayList("music_list", musicList);
         playListFragment.setArguments(args);
         playerFragment.setArguments(args);
 
-//         Set up listener
+
         MusicAdapter.OnMusicClickListener listener = new MusicAdapter.OnMusicClickListener() {
             @Override
             public void onMusicClick(Music music) {
                 Bundle args = new Bundle();
                 args.putParcelable("selected_music", music);
                 playerFragment.setArguments(args);
-                viewPager.setCurrentItem(1); // Switch to Player tab
+                viewPager.setCurrentItem(1);
             }
         };
 
         playListFragment.setOnMusicClickListener(listener);
 
-        // Set up ViewPager2 with FragmentStateAdapter
+
         ViewPageAdapter viewPagerAdapter = new ViewPageAdapter(this);
         viewPagerAdapter.addFragment(playListFragment, "Playlist");
         viewPagerAdapter.addFragment(playerFragment, "Player");
         viewPager.setAdapter(viewPagerAdapter);
 
 
-        // Connect TabLayout with ViewPager2
+
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(viewPagerAdapter.getFragmentTitle(position))
         ).attach();
+
 
         tabLayout.setTabTextColors(
                 getResources().getColor(R.color.tab_unselected),
                 getResources().getColor(R.color.tab_selected)
         );
+
     }
 
 }
