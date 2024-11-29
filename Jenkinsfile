@@ -106,7 +106,7 @@ pipeline {
         success {
             echo 'Pipeline completed successfully!'
 
-            slackSend(channel: '#jenkins-notification', message: "Pipeline success: ${env.JOB_NAME} #${env.BUILD_NUMBER} #${formattedDate")
+            slackSend(channel: '#jenkins-notification', message: "Pipeline success: ${env.JOB_NAME} #${env.BUILD_NUMBER} ${formattedDate}")
 
             mail to: 'faqihalfadholi@gmail.com',
                  subject: "Jenkins Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
