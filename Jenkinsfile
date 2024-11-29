@@ -11,12 +11,6 @@ pipeline {
                 sh 'echo "Install dependencies here"'
             }
         }
-        stage('Clean') {
-            steps {
-                echo 'Cleaning the project...'
-                sh './gradlew clean'
-            }
-        }
         stage('Build') {
             steps {
                 echo 'Building the project...'
