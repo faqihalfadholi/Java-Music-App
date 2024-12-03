@@ -2,28 +2,34 @@ package com.example.musicapp.loginregister;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.musicapp.R;
 import com.example.musicapp.StartPage;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etUsername, etPassword;
-    private Button btnLogin, btnRegister;
+    private Button btnLogin ;
+    private TextView tvRegister;
     private CheckBox cbRememberMe;
     private AppDatabase db;
     private UserDAO userDao;
     private SharedPreferences sharedPreferences;
+    SpannableString ss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login);
 
         db = AppDatabase.getInstance(this);
         userDao = db.userDao();
@@ -33,18 +39,53 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.editTextPassword);
         cbRememberMe = findViewById(R.id.checkBoxRememberMe);
         btnLogin = findViewById(R.id.buttonLogin);
-        btnRegister = findViewById(R.id.buttonRegister);
+        tvRegister = findViewById(R.id.buttonRegister);
+        ss = new SpannableString("Don't have an account? Sign up here");
+
 
         btnLogin.setOnClickListener(v -> login());
-        btnRegister.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
+        setupRegisterLink();
 
-        // Check if credentials are saved
+
+
         if (sharedPreferences.getBoolean("remember_me", false)) {
             etUsername.setText(sharedPreferences.getString("username", ""));
             etPassword.setText(sharedPreferences.getString("password", ""));
             cbRememberMe.setChecked(true);
         }
     }
+
+    private void setupRegisterLink() {
+
+        SpannableString ss = new SpannableString("Don't have an account? Sign up here");
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+
+
+        int startIndex = ss.length() - 13;
+        int endIndex = ss.length();
+
+
+        ss.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        ss.setSpan(new ForegroundColorSpan(Color.BLUE), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        tvRegister.setText(ss);
+        tvRegister.setMovementMethod(LinkMovementMethod.getInstance());
+        tvRegister.setHighlightColor(Color.TRANSPARENT);
+    }
+
 
     private void login() {
         String username = etUsername.getText().toString();
@@ -68,10 +109,12 @@ public class LoginActivity extends AppCompatActivity {
                         editor.apply();
                     }
 
-                    startActivity(new Intent(LoginActivity.this, StartPage.class));
+                    Intent intent = new Intent(LoginActivity.this, StartPage.class);
+                    intent.putExtra("USERNAME", username);
+                    startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Invalid Credential", Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();

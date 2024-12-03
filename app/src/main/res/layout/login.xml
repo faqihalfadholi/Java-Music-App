@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp"
+              android:background="#FFFFFF">
+
+
+    <ImageView
+            android:id="@+id/mainImage"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/headphones"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="60dp"
+            android:contentDescription="Main Image"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp">
+
+
+
+                <TextView
+                        android:id="@+id/titleText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Login"
+                        android:fontFamily="@font/adlam_display"
+                        android:textSize="28sp"
+                        android:textColor="@color/tab_unselected"
+                        android:textStyle="bold"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="16dp"/>
+
+
+            </RelativeLayout>
+
+
+    <EditText
+            android:id="@+id/editTextUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:minHeight="48dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:background="@drawable/custom_edit_text_background"
+            android:drawableStart="@drawable/ic_username"
+            android:drawablePadding="8dp"
+            android:textColorHint="#78909C"
+            android:textColor="#263238"
+            android:layout_marginBottom="16dp"
+            android:inputType="text"
+            android:maxLines="1" />
+
+    <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:minHeight="48dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:background="@drawable/custom_edit_text_background"
+            android:drawableStart="@drawable/ic_password"
+            android:drawablePadding="8dp"
+            android:textColorHint="#78909C"
+            android:textColor="#263238"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+
+    <Button
+            android:id="@+id/buttonLogin"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Login"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/btn_rec"
+            android:layout_marginTop="20dp"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    >
+
+                <CheckBox
+                        android:id="@+id/checkBoxRememberMe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#E29797"
+                        android:textColor="@color/black"
+                        android:padding="8dp"/>
+
+                <TextView
+                        android:id="@+id/footerText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Remember me"
+                        android:textSize="13sp"
+                        android:textColor="#999999"
+                        android:layout_marginEnd="3dp"/>
+
+                <ImageView
+                        android:id="@+id/footerIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_music_note"
+                        android:contentDescription="Footer Icon"/>
+
+
+            </LinearLayout>
+
+    <TextView
+            android:id="@+id/buttonRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Sign up here"
+            android:textSize="14sp"
+            android:textColor="#999999"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:minHeight="48dp"/>
+</LinearLayout>

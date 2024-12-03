@@ -3,6 +3,7 @@ package com.example.musicapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.example.musicapp.databinding.ActivityStartPageBinding;
 
 public class StartPage extends AppCompatActivity {
 
+    private TextView welcomeText;
 
     Button btn;
     @Override
@@ -21,6 +23,7 @@ public class StartPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_page);
 
+        welcomeText = findViewById(R.id.welcomeText);
         btn = findViewById(R.id.btn_start);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -30,6 +33,15 @@ public class StartPage extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("USERNAME");
+
+        if (username != null && !username.isEmpty()) {
+            welcomeText.setText("Welcome " + username);
+        } else {
+            welcomeText.setText("Welcome!");
+        }
     }
 
 }
